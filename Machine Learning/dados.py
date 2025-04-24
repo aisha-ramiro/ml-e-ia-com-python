@@ -1,6 +1,22 @@
+#Importação de bibliotecas	
 import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-import ploty.express as px
+import plotly.express as px
+
+
+#Exploração de dados
+base_credit= pd.read_csv('credit_data.csv')
+
+#Visualização de dados
+base_credit.head(10) #Exibe os primeiros registros
+base_credit.tail(10) #Exibe os últimos registros
+
+base_credit.describe() #Exibe estatísticas descritivas da base de dados
+
+
+base_credit[base_credit['income'] >= 10000] #Exbe os registros com renda maior ou igual a 10000
+base_credit[base_credit['loan'] <= 1000] #Exibe os registros com empréstimo menor ou igual a 1000
+
 
