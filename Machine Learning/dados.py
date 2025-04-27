@@ -44,4 +44,8 @@ base_credit.loc[base_credit['age'] < 0, 'age'] = 40.92  #Substituir os valores i
 grafico = px.scatter_matrix(base_credit, dimensions=['age', 'income', 'loan'], color='default') #Exibe o gráfico de dispersão   
 grafico.show()
 
-
+#Tratamento de valores faltantes
+base_credit.isnull() #Exibe os valores nulos da base de dados
+base_credit.isnull().sum() #Exibe a soma dos valores nulos da base de dados
+base_credit.loc(pd.isnull(base_credit['age'])) #Exibe os registros com valores nulos na coluna idade
+base_credit['age'].fillna(base_credit['age'].mean(), inplace=True) #Substitui os valores nulos pela média da idade
