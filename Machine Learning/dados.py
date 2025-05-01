@@ -47,5 +47,11 @@ grafico.show()
 #Tratamento de valores faltantes
 base_credit.isnull() #Exibe os valores nulos da base de dados
 base_credit.isnull().sum() #Exibe a soma dos valores nulos da base de dados
-base_credit.loc(pd.isnull(base_credit['age'])) #Exibe os registros com valores nulos na coluna idade
+base_credit.loc[pd.isnull(base_credit['age'])] #Exibe os registros com valores nulos na coluna idade
 base_credit['age'].fillna(base_credit['age'].mean(), inplace=True) #Substitui os valores nulos pela média da idade
+
+#Divisão entre previsores e classe
+x_credit = base_credit.iloc[:, 1:4].values #Seleciona as colunas 1 a 3 da base de dados
+y_credit = base_credit.iloc[:, 4].values #Seleciona a coluna 4 da base de dados
+
+
