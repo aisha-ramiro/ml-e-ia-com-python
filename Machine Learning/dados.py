@@ -4,6 +4,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
+from sklearn.preprocessing import StandardScaler
 
 
 #Exploração de dados
@@ -48,10 +49,19 @@ grafico.show()
 base_credit.isnull() #Exibe os valores nulos da base de dados
 base_credit.isnull().sum() #Exibe a soma dos valores nulos da base de dados
 base_credit.loc[pd.isnull(base_credit['age'])] #Exibe os registros com valores nulos na coluna idade
-base_credit['age'].fillna(base_credit['age'].mean(), inplace=True) #Substitui os valores nulos pela média da idade
+base_credit['age'] = base_credit['age'].fillna(base_credit['age'].mean()) #Substitui os valores nulos pela média da idade
 
 #Divisão entre previsores e classe
 x_credit = base_credit.iloc[:, 1:4].values #Seleciona as colunas 1 a 3 da base de dados
 y_credit = base_credit.iloc[:, 4].values #Seleciona a coluna 4 da base de dados
 
+#Escalonamento de atributos
+print(x_credit[:, 0].min(), x_credit[:, 1].min(), x_credit[:, 2].min()) #Exibe o valor mínimo de cada coluna
+print(x_credit[:, 0].max(), x_credit[:, 1].max(), x_credit[:, 2].max()) # Exibe o valor máximo de cada coluna
+
+#Padronização dos dados
+scaler_credit = StandardScaler() #Cria o objeto de padronização
+x_credit = scaler_credit.fit_transform(x_credit) #Aplica a padronização nos dados
+print("Após padronização", x_credit[:, 0].min(), x_credit[:, 1].min(), x_credit[:, 2].min()) #Exibe o valor mínimo de cada coluna
+print("Após padronização", x_credit[:, 0].max(), x_credit[:, 1].max(), x_credit[:, 2].max()) # Exibe o valor máximo de cada coluna
 
