@@ -7,6 +7,9 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+
 
 # %%
 #Carregando a base de dados ----------------------
@@ -65,3 +68,7 @@ x_census[:, 13] = label_encoder_country.fit_transform(x_census[:, 13])
 
 
 # %%
+# Atributos categóricos - OneHotEncoder ----------------------
+onehotencoder_census = ColumnTransformer(transformers=[('OneHot', OneHotEncoder(), [1, 3, 5, 6, 7, 8, 9, 13])], remainder='passthrough') # one hot encoder para transformar as variáveis categóricas em numéricas
+x_census = onehotencoder_census.fit_transform(x_census).toarray() # Transformando as variáveis categóricas em numéricas
+print(x_census[0]) # Visualizando os dados transformados
