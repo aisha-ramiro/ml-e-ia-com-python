@@ -9,6 +9,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
+from sklearn.model_selection import train_test_split
+import pickle
 
 
 # %%
@@ -72,3 +74,26 @@ x_census[:, 13] = label_encoder_country.fit_transform(x_census[:, 13])
 onehotencoder_census = ColumnTransformer(transformers=[('OneHot', OneHotEncoder(), [1, 3, 5, 6, 7, 8, 9, 13])], remainder='passthrough') # one hot encoder para transformar as variáveis categóricas em numéricas
 x_census = onehotencoder_census.fit_transform(x_census).toarray() # Transformando as variáveis categóricas em numéricas
 print(x_census[0]) # Visualizando os dados transformados
+
+#Escalonamento dos valores ----------------------
+# %%
+scaler_census = StandardScaler() # Escalonando os dados
+x_census = scaler_census.fit_transform(x_census) # Transformando os dados
+print(x_census[0]) # Visualizando os dados transformados
+
+#Divisão das bases de treino e teste ----------------------
+x_credit_treinamento, x_credit_teste, y_credit_treinamento, y_credit_teste = train_test_split(x_census, y_census, test_size=0.25, random_state=0) # Dividindo os dados em treino e teste
+x_credit_treinamento.shape # Visualizando o tamanho dos dados de treino
+x_credit_teste.shape # Visualizando o tamanho dos dados de teste
+
+x_census_treinamento, x_census_teste, y_census_treinamento, y_census_teste = train_test_split(x_census, y_census, test_size=0.15, random_state=0) # Dividindo os dados em treino e teste
+x_census_treinamento.shape # Visualizando o tamanho dos dados de treino
+x_census_teste.shape # Visualizando o tamanho dos dados de teste
+
+#Salvar as bases de dados ----------------------
+# %%
+with open('credito.pkl', mode='wb') as f: # Salvando os dados em um arquivo pickle
+    pickle.dump((x_credit_treinamento, x_credit_teste, y_credit_treinamento, y_credit_teste), f) # Salvando os dados em um arquivo pickle
+
+with open('censo.pkl', mode='wb') as f: # Salvando os dados em um arquivo pickle
+    pickle.dump((x_census_treinamento, x_census_teste, y_census_treinamento, y_census_teste), f) # Salvando os dados em um arquivo pickle
